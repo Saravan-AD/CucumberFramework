@@ -1,6 +1,7 @@
 package com.automation.pages;
 
 import com.automation.pages.BasePage;
+import com.automation.utils.ConfigReader;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -25,7 +26,7 @@ public class ReviewPage extends BasePage {
         return finishBtn.isDisplayed();
     }
 
-    public double priceCalc(){
+    public void priceCalc(){
         List<Double> prodPrice=new ArrayList<>();
         for(WebElement price:itemPrice){
             String priceText = price.getText().replace("$", "").replace(",", "").trim();
@@ -34,12 +35,12 @@ public class ReviewPage extends BasePage {
         double sumPrice = prodPrice.stream().mapToDouble(Double::doubleValue).sum();
         String priceText = tax.getText().replace("Tax:", "").replace("$","").trim();
         sumPrice=sumPrice+Double.parseDouble(priceText);
-        return sumPrice;
+        ConfigReader.setConfigValue("actual.price", String.valueOf(sumPrice));
     }
 
-    public double getTotalPrice(){
+    public void getTotalPrice(){
         String priceText = total.getText().replace("Total:", "").replace("$","").trim();
-        return Double.parseDouble(priceText);
+        ConfigReader.setConfigValue("displayed.price", priceText);
     }
 
     public void clickOnFinishBtn() {

@@ -1,6 +1,7 @@
 package com.automation.steps;
 
 import com.automation.pages.HomePage;
+import com.automation.utils.ConfigReader;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,7 +17,6 @@ public class HomeSteps {
     List<Double> lowToHigh;
     List<String> aToz;
     List<String> zToa;
-    static int qty;
     String qtyInBadge;
     @Then("verify user is on home page")
     public void verify_user_is_on_home_page() {
@@ -30,7 +30,8 @@ public class HomeSteps {
 
     @Then("verify cart icon displays quantity one")
     public void verify_cart_icon_displays_quantity_one() {
-        Assert.assertEquals(homePage.checkQuantityOnShoppingCart(), "1");
+        homePage.checkQuantityOnShoppingCart();
+        Assert.assertEquals(ConfigReader.getConfigValue("carticon.qty"), "1");
     }
 
     @When("user click on cart icon")
@@ -66,14 +67,14 @@ public class HomeSteps {
 
     @When("all the items are added to the cart")
     public void allTheItemsAreAddedToTheCart() {
-        qty=homePage.clickOnAddToCartOfAllItem();
+        homePage.clickOnAddToCartOfAllItem();
     }
 
     @Then("verify the quantity of items added is equal to the number displayed in the cart icon")
     public void verifyTheQuantityOfItemsAddedIsEqualToTheNumberDisplayedInTheCartIcon() {
-        qtyInBadge=homePage.checkQuantityOnShoppingCart();
-//        System.out.println(Integer.parseInt(qtyInBadge));
-        Assert.assertEquals(qty,Integer.parseInt(qtyInBadge));
+        homePage.checkQuantityOnShoppingCart();
+        System.out.println(Integer.parseInt(ConfigReader.getConfigValue("carticon.qty")));
+        Assert.assertEquals(Integer.parseInt(ConfigReader.getConfigValue("addedItems.qty")),Integer.parseInt(ConfigReader.getConfigValue("carticon.qty")));
     }
 
     @And("verify remove buttons are not present")

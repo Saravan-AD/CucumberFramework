@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.utils.ConfigReader;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -45,19 +46,19 @@ public class HomePage extends BasePage{
         addToCartBtnList.get(0).click();
     }
 
-    public int clickOnAddToCartOfAllItem() {
+    public void clickOnAddToCartOfAllItem() {
         int num=addToCartBtnList.size();
         for(WebElement btn:addToCartBtnList)
             btn.click();
-        return num;
+        ConfigReader.setConfigValue("addedItems.qty", String.valueOf(num));
     }
 
     public void clickOnShoppingCartLink() {
         shoppingCartLink.click();
     }
 
-    public String checkQuantityOnShoppingCart(){
-        return quantity.getText();
+    public void checkQuantityOnShoppingCart(){
+        ConfigReader.setConfigValue("carticon.qty",quantity.getText());
     }
 
     public void logoutMethod(){

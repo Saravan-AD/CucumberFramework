@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import com.automation.utils.ConfigReader;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -21,11 +22,11 @@ public class CartPage extends BasePage{
         checkOutBtn.click();
     }
 
-    public int checkQuantityOnCartPage(){
+    public void checkQuantityOnCartPage(){
         int quantity=0;
         for(WebElement qty:cartPageQty){
             quantity+=Integer.parseInt(qty.getText());
         }
-        return quantity;
+        ConfigReader.setConfigValue("cartpage.qty", String.valueOf(quantity));
     }
 }

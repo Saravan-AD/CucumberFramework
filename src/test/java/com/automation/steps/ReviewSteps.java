@@ -1,7 +1,9 @@
 package com.automation.steps;
 
 import com.automation.pages.ReviewPage;
+import com.automation.utils.ConfigReader;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
@@ -20,7 +22,9 @@ public class ReviewSteps {
 
     @And("verify price displayed is equal to the actual price")
     public void verifyPriceDisplayedIsEqualToTheActualPrice() {
-        double totalPrice= reviewPage.priceCalc();
-        Assert.assertEquals(reviewPage.getTotalPrice(),totalPrice,0);
+        reviewPage.priceCalc();
+        reviewPage.getTotalPrice();
+        Assert.assertEquals(ConfigReader.getConfigValue("actual.price"),ConfigReader.getConfigValue("displayed.price"));
     }
+
 }
